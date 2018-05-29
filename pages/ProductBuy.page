@@ -1,0 +1,225 @@
+<apex:page showHeader="false" controller="ProductBuyController" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+  <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="x-ua-compatible" content="ie=edge" />
+      <title>Buy Product</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <!-- Import the Design System style sheet -->
+      <apex:slds />
+    </head>
+    
+    <body>
+      <!-- REQUIRED SLDS WRAPPER -->
+      <div class="slds-scope">
+        <!-- PRIMARY CONTENT WRAPPER --> 
+        <apex:pageBlock id="allPage">
+         
+          <div class="myApp">
+          <apex:form id="myForm">
+
+              <div class="slds-page-header">
+                <div class="slds-align_absolute-center">
+                  <div class="slds-grid wrapper slds-gutters slds-p-around_medium">
+                    <div class="slds-col slds-size_6-of-12">
+                      <span class="slds-text-heading_medium">{! $Label.Contact_Information }</span>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                      <span class="slds-text-heading_medium">{! $Label.Product_Information }</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MESSAGES WRAPPER -->
+              <apex:pageBlock id="message">
+                <div class="slds-notify_container slds-is-relative {! IF(error, '', 'slds-hide') }">
+                  <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                      <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#error')}" />
+                      </svg>
+                    </span>
+                    <div class="slds-notify__content">
+                      <h2 class="slds-text-heading_small "><apex:messages /></h2>
+                        <a href="#" onClick="window.history.back();"> Back to product list</a>
+                      </div>
+                      <button class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close"
+                      onclick="close_msg(this); return false;">
+                      <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}" />
+                      </svg>
+                      <span class="slds-assistive-text">Close</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="slds-notify_container slds-is-relative {! IF(success, '', 'slds-hide') }">
+                    <div class="slds-notify slds-notify_toast slds-theme_success" role="alert">
+                      <span class="slds-assistive-text">success</span>
+                      <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#success')}" />
+                        </svg>
+                      </span>
+                      <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small "><apex:messages /></h2>
+                        <a href="#" onClick="window.history.back();"> Back to product list</a>
+                      </div>
+                      <button class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close"
+                      onclick="close_msg(this); return false;">
+                      <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}" />
+                      </svg>
+                      <span class="slds-assistive-text">Close</span>
+                      </button>
+                    </div>
+                  </div>
+                </apex:pageBlock>
+                
+                <!-- FORM WRAPPER -->
+                <div class="slds-align_absolute-center">
+                  <div class="slds-grid wrapper slds-gutters slds-p-around_medium">
+                    <div class="slds-col slds-size_6-of-12 slds-align_absolute-center">
+                      <div class="slds-form slds-form_horizontal">
+                        <div class="slds-form-element">
+                          <label class="slds-form-element__label slds-p-around_x-small" for="input-id-01">{! $Label.Email }<abbr class="slds-required" title="required">*</abbr></label>
+                          <div class="slds-form-element__control">
+                            <input type="email" id="inputEmail" required="true" class="slds-input" placeholder="john@noreply.com" value="{! contactEmail }" />
+                          </div>
+                        </div>
+                        <div class="slds-form-element">
+                          <label class="slds-form-element__label slds-p-around_x-small" for="input-id-01">{! $Label.First_Name }</label>
+                          <div class="slds-form-element__control">
+                            <input type="text" id="inputFirstName" required="true" class="slds-input" placeholder="John" value="{! contactFirstName }" />
+                          </div>
+                        </div>
+                        <div class="slds-form-element">
+                          <label class="slds-form-element__label slds-p-around_x-small" for="input-id-01">{! $Label.Last_Name }</label>
+                          <div class="slds-form-element__control">
+                            <input type="text" id="inputLastName" required="true" class="slds-input" placeholder="Doe"  value="{! contactLastName }" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                      <div class="slds-form slds-form_horizontal">
+                        <div class="slds-form-element">
+                          <label class="slds-form-element__label slds-p-around_x-small" for="input-id-01">{! $Label.Product_Name }</label>
+                          <div class="slds-form-element__control">
+                            <span class="slds-form-element__static slds-p-vertical_x-small">{! curProduct.Name }</span>
+                          </div>
+                        </div>
+                        <div class="slds-form-element">
+                          <label class="slds-form-element__label slds-p-around_x-small" for="input-id-01">{! $Label.Cost }</label>
+                          <div class="slds-form-element__control">
+                            <span class="slds-form-element__static slds-p-vertical_x-small">$ {! IntPrice }</span>
+                          </div>
+                        </div>
+                        <div class="slds-form-element" id="form-unit">
+                          <label class="slds-form-element__label slds-p-around_x-small" for="input-id-01">{! $Label.Unit_Count }<abbr class="slds-required" title="required">*</abbr></label>
+                          <div class="slds-form-element__control">
+                            <input type="number" id="units" class="slds-input" placeholder="" value="1" min="1" oninput="calcAmount({! IntPrice })" />
+                            <div id="error-message" class="slds-form-element__help slds-hide">This field is required a positive integer value</div>
+                          </div>
+                          
+                        </div>
+                        <div class="slds-form-element">
+                          <label class="slds-form-element__label slds-p-around_x-small" for="input-id-01">{! $Label.Total_amount }</label>
+                          <div class="slds-form-element__control">
+                            <span class="slds-form-element__static slds-p-vertical_x-small" id="total">$ {! IntPrice }</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FORM BUTTONS -->
+                <div class="slds-docked-form-footer">
+                  <a href="#" class="slds-button slds-button_neutral" onClick="window.history.back();">{! $Label.Cancel }</a>
+                  <apex:commandButton value="{! $Label.buy_label }" onclick="callActionFunction(); return false;" styleClass="slds-button slds-button_brand"/>
+                </div>
+                  
+                <apex:actionFunction name="getInputs" action="{! buyProduct }" status="resultStatus" rerender="allPage">
+                  <apex:param id="pEmail" name="pEmail" value="" />
+                  <apex:param id="pFirstName" name="pFirstName" value="" />
+                  <apex:param id="pLastName" name="pLastName" value="" />
+                  <apex:param id="pCount" name="pCount" value="{! contactCount }" />
+                  <apex:param id="pProductId" name="pProductId" value="{! curProduct.Id }" />
+                  <apex:param id="pProductName" name="pProductName" value="{! curProduct.Name }" />
+                  <apex:param id="pProductAmount" name="pProductAmount" value="{! curProduct.Units_Available__c }" />
+                  <apex:param id="pUnitPrice" name="pUnitPrice" value="{! curProduct.Unit_Price__c }" />
+                </apex:actionFunction>
+
+              </apex:form>
+           </div>
+      </apex:pageBlock>
+      <!-- / PRIMARY CONTENT WRAPPER -->
+    </div>
+    <!-- / REQUIRED SLDS WRAPPER -->
+      
+    <style type="text/css">
+                            
+          .slds-page-header, .slds-notify {
+              margin-top: -8px;
+              margin-left: -8px;
+              margin-right: -8px;
+          }
+
+          .slds-docked-form-footer {
+              bottom: unset!important;
+          }
+
+          .avatar img {
+              height: 250px;
+          }
+          
+          .demo-only {
+              height: 640px;
+          }
+          
+          .wrapper {
+              max-width: 70%;
+              min-width: 800px;
+          }
+      
+    </style>
+      
+    <script type="text/javascript">
+                            
+      function calcAmount(sum) {
+                            
+          var count = document.getElementById("units").value;
+          var total = count * sum;
+                                
+          if (Number.isInteger(count+1-1) && !Number.isNaN(total) && total != 0) {
+              document.getElementById("total").innerHTML = '$ ' + total;
+              document.getElementById("form-unit").classList.remove("slds-has-error");
+              document.getElementById("error-message").classList.add("slds-hide");
+          } else {
+              document.getElementById("form-unit").classList.add("slds-has-error");
+              document.getElementById("error-message").classList.remove("slds-hide");
+          }
+    
+      }
+
+      function close_msg(d) {
+          d.parentElement.parentElement.classList.add("slds-hide");
+      }
+      
+      function callActionFunction() {
+          var email = document.getElementById("inputEmail").value;
+          var fname = document.getElementById("inputFirstName").value;
+          var lname = document.getElementById("inputLastName").value;
+          var count = document.getElementById("units").value;
+          getInputs(email, fname, lname, count);
+      }
+
+      calcAmount({! IntPrice });
+
+    </script>
+
+    </body>
+  </html>
+</apex:page>

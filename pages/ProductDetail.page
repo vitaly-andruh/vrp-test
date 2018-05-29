@@ -1,0 +1,92 @@
+<apex:page showHeader="false" controller="ProductDetailController" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+  <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="x-ua-compatible" content="ie=edge" />
+      <title>Product Table Page</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <!-- Import the Design System style sheet -->
+      <apex:slds />
+      </head>
+      <body class="slds-p-top_none">
+        <!-- REQUIRED SLDS WRAPPER -->
+        <div class="slds-scope">
+          <!-- ERROR MODAL -->
+          <div class="demo-only {! IF(IsError, 'slds-show', 'slds-hide') }">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+              <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                  <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Ooops! Something wrong!</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium slds-text-color_error slds-text-align_center" id="modal-content-id-1">
+                  <apex:messages /> 
+                  <a href="/one/one.app#/n/Product_Table"> Back to list </a> -
+                  <a href="#" onclick="window.open('', '_self', ''); window.close();">Close window</a>
+                </div>
+              </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+          </div>
+          <!-- PRIMARY CONTENT WRAPPER -->
+          <div class="myapp {! IF(IsError, 'slds-hide','slds-show') }">
+            <div class="slds-page-header">
+              <div class="slds-align_absolute-center">
+                <h1 class="slds-text-heading_medium">{! detailData.Name }</h1>
+              </div>
+            </div>
+            <div class="slds-align_absolute-center">
+            <div class="slds-grid wrapper slds-gutters slds-p-around_medium">
+              <div class="slds-col slds-size_6-of-12 slds-align_absolute-center">
+                <div class="avatar" title="{! detailData.Name }">
+                  <img src="{! detailData.Image_Url__c }" alt="{! detailData.Name }" />
+                </div>
+              </div>
+              <div class="slds-col slds-size_6-of-12">
+                <dl class="slds-list_stacked">
+                  <dt class="slds-item_label slds-text-color_weak slds-truncate">Amount:</dt>
+                  <dd class="slds-item_detail">{! detailData.Units_Available__c }</dd>
+                  <dt class="slds-item_label slds-text-color_weak slds-truncate">Title:</dt>
+                  <dd class="slds-item_detail">{! detailData.Product_Title__c }</dd>
+                  <dt class="slds-item_label slds-text-color_weak slds-truncate">Description:</dt>
+                  <dd class="slds-item_detail">{! detailData.Product_description__c }</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+            <div class="slds-docked-form-footer">
+              <a href="/one/one.app#/n/Product_Table" class="slds-button slds-button_neutral" onClick="window.open('/apex/ProductTable', '_self')">{! $Label.In_Sopping }</a>
+              <button type="button" class="slds-button slds-button_brand" onClick="window.open('/apex/ProductBuy?id={!detailData.Id}', '_self')">{! $Label.buy_label }</button>
+            </div>
+          </div>
+        </div>
+
+      <style type="text/css">
+        
+            .slds-page-header, .slds-notify {
+              margin-top: -8px;
+              margin-left: -8px;
+              margin-right: -8px;
+            }
+
+            .slds-docked-form-footer {
+              bottom: unset!important;
+            }
+
+            .avatar img {
+              height: 250px;
+
+            }
+
+            .demo-only {
+              height: 640px;
+            } 
+
+            .wrapper {
+              max-width: 60%;
+              min-width: 700px;
+            }
+
+      </style>
+    </body>
+  </html>
+</apex:page>

@@ -43,12 +43,9 @@ public class ProductBuyController {
 			if (productAmount < contactCount) {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 
 					'Sorry, we don`t have so much units of this product! Max available: ' + productAmount));
-			} else if (productId == null) {
-				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 
-					'Sorry, this product not found'));
 			} else if (contactCount < 1) {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 
-					'Unit count must be > 0!'));	
+					'Unit count must be greather than 0!'));	
 			} else {
 				createNewOrder();
 			}
@@ -81,7 +78,7 @@ public class ProductBuyController {
 		} catch (Exception e) {
 
 			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Error, 'This Product not found'));
-		
+			return detailData;		
 		}
 		
 		return detailData;

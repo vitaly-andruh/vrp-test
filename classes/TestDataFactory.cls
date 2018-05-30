@@ -8,7 +8,7 @@ public with sharing class TestDataFactory {
 		List<Product_Table__c> demoListPoduct = new List<Product_Table__c>();
 
 		for (Integer i = 0; i < count; i++) {
-			demoListPoduct.add(new Product_Table__c(Name = 'New Product ' + i));
+			demoListPoduct.add(new Product_Table__c(Name = 'New Product ' + i, Units_Available__c = i+1, Unit_Price__c = i * 100));
 		}
 
 		return demoListPoduct;
